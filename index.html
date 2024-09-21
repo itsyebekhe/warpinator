@@ -103,6 +103,13 @@
         .random-btn:hover {
             background-color: #3700b3;
         }
+        .qr-code-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 24px;
+            height: 200px; /* Set a fixed height for vertical centering */
+        }
     </style>
 </head>
 <body>
@@ -139,6 +146,7 @@
             </div>
         </form>
         <div class="card-panel" id="result" style="display: none;">
+            <div class="qr-code-container" id="qrCodeContainer"></div>
             <h5>Generated URL:</h5>
             <div class="input-field">
                 <input id="generatedUrl" type="text" readonly class="form-control">
@@ -150,6 +158,8 @@
         </div>
     </div>
 
+    <!-- Include qrcode.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('warpinatorForm').addEventListener('submit', function(event) {
@@ -164,6 +174,9 @@
 
                 document.getElementById('generatedUrl').value = url;
                 document.getElementById('result').style.display = 'block';
+
+                // Generate QR code
+                generateQRCode(url);
             });
         });
 
@@ -188,6 +201,20 @@
                     document.getElementById('port').value = port;
                 })
                 .catch(error => console.error('Error fetching data:', error));
+        }
+
+        function generateQRCode(data) {
+            var qrCodeContainer = document.getElementById('qrCodeContainer');
+            qrCodeContainer.innerHTML = ''; // Clear previous QR code if any
+
+            new QRCode(qrCodeContainer, {
+                text: data,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.L
+            });
         }
     </script>
 </body>
