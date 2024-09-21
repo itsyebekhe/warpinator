@@ -4,14 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Warpinator Configuration</title>
-    <!-- Materialize CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-    <!-- Material Icons -->
+    <!-- Material Design 3 CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: #1976d2;
+        }
+        .input-field {
+            margin-bottom: 24px;
+        }
+        .input-field label {
+            color: #757575;
+            font-size: 14px;
+        }
+        .input-field input, .input-field select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+        }
+        .input-field input:focus, .input-field select:focus {
+            border-color: #1976d2;
+        }
+        .btn {
+            background-color: #1976d2;
+            color: #fff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .btn:hover {
+            background-color: #1565c0;
+        }
+        .btn i {
+            margin-left: 8px;
+        }
+        .card-panel {
+            margin-top: 24px;
+            padding: 16px;
+            border-radius: 12px;
+            background-color: #f5f5f5;
+            display: none;
+        }
+        .card-panel h5 {
+            color: #1976d2;
+            margin-bottom: 16px;
+        }
+        .card-panel input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+        }
+        .card-panel input:focus {
+            border-color: #1976d2;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h2 class="center-align">Warpinator Configuration</h2>
+        <h2>Warpinator Configuration</h2>
         <form id="warpinatorForm">
             <div class="input-field">
                 <input id="license" type="text" name="license">
@@ -53,13 +134,8 @@
         </div>
     </div>
 
-    <!-- Materialize JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems);
-
             document.getElementById('warpinatorForm').addEventListener('submit', function(event) {
                 event.preventDefault();
 
@@ -80,7 +156,7 @@
             copyText.select();
             copyText.setSelectionRange(0, 99999); /* For mobile devices */
             document.execCommand('copy');
-            M.toast({html: 'URL copied to clipboard'});
+            alert('URL copied to clipboard');
         }
     </script>
 </body>
