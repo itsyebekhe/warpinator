@@ -25,14 +25,14 @@
                     <option value="v2rayng">V2RayNG</option>
                     <option value="shadowrocket">Shadowrocket</option>
                 </select>
-                <label>Configuration Type (Optional)</label>
+                <label>Configuration Type</label>
             </div>
             <div class="input-field">
-                <input id="ip" type="text" name="ip">
+                <input id="ip" type="text" name="ip" required>
                 <label for="ip">IP Address (Optional)</label>
             </div>
             <div class="input-field">
-                <input id="port" type="number" name="port" value="2408">
+                <input id="port" type="number" name="port" value="2408" required>
                 <label for="port">Port (Optional)</label>
             </div>
             <div class="center-align">
@@ -65,7 +65,7 @@
 
                 var license = document.getElementById('license').value || '';
                 var type = document.getElementById('type').value || 'singbox';
-                var ip = document.getElementById('ip').value || '';
+                var ip = document.getElementById('ip').value || '162.159.192.76';
                 var port = document.getElementById('port').value || '2408';
 
                 var url = `https://itshin.serv00.net/api/warpinator?license=${encodeURIComponent(license)}&type=${encodeURIComponent(type)}&ip=${encodeURIComponent(ip)}&port=${encodeURIComponent(port)}`;
