@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warpinator Configuration</title>
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2 class="center-align">Warpinator Configuration</h2>
+        <form id="warpinatorForm">
+            <div class="input-field">
+                <input id="license" type="text" name="license">
+                <label for="license">License Key (Optional)</label>
+            </div>
+            <div class="input-field">
+                <select id="type" name="type">
+                    <option value="singbox" selected>Singbox</option>
+                    <option value="streisand">Streisand</option>
+                    <option value="wireguard">Wireguard</option>
+                    <option value="v2rayng">V2RayNG</option>
+                    <option value="shadowrocket">Shadowrocket</option>
+                </select>
+                <label>Configuration Type (Optional)</label>
+            </div>
+            <div class="input-field">
+                <input id="ip" type="text" name="ip">
+                <label for="ip">IP Address (Optional)</label>
+            </div>
+            <div class="input-field">
+                <input id="port" type="number" name="port" value="2408">
+                <label for="port">Port (Optional)</label>
+            </div>
+            <div class="center-align">
+                <button class="btn waves-effect waves-light" type="submit">Generate URL
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </form>
+        <div class="card-panel" id="result" style="display: none;">
+            <h5>Generated URL:</h5>
+            <div class="input-field">
+                <input id="generatedUrl" type="text" readonly>
+                <label for="generatedUrl">URL</label>
+            </div>
+            <button class="btn waves-effect waves-light" onclick="copyToClipboard()">Copy URL
+                <i class="material-icons right">content_copy</i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+
+            document.getElementById('warpinatorForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                var license = document.getElementById('license').value || '';
+                var type = document.getElementById('type').value || 'singbox';
+                var ip = document.getElementById('ip').value || '';
+                var port = document.getElementById('port').value || '2408';
+
+                var url = `https://itshin.serv00.net/api/warpinator?license=${encodeURIComponent(license)}&type=${encodeURIComponent(type)}&ip=${encodeURIComponent(ip)}&port=${encodeURIComponent(port)}`;
+
+                document.getElementById('generatedUrl').value = url;
+                document.getElementById('result').style.display = 'block';
+            });
+        });
+
+        function copyToClipboard() {
+            var copyText = document.getElementById('generatedUrl');
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+            document.execCommand('copy');
+            M.toast({html: 'URL copied to clipboard'});
+        }
+    </script>
+</body>
+</html>
