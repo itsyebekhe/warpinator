@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warpinator Configuration</title>
+    <title>Warpinator</title>
     <!-- Material Design 3 CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -88,11 +88,25 @@
         .card-panel input:focus {
             border-color: #1976d2;
         }
+        .random-btn {
+            background-color: #6200ea;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 8px;
+            display: inline-block;
+        }
+        .random-btn:hover {
+            background-color: #3700b3;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Warpinator Configuration</h2>
+        <h2>Warpinator</h2>
         <form id="warpinatorForm">
             <div class="input-field">
                 <input id="license" type="text" name="license">
@@ -111,6 +125,7 @@
             <div class="input-field">
                 <input id="ip" type="text" name="ip">
                 <label for="ip">IP Address (Optional)</label>
+                <button type="button" class="random-btn" onclick="fetchRandomIP()">Auto fill</button>
             </div>
             <div class="input-field">
                 <input id="port" type="number" name="port" value="2408">
@@ -157,6 +172,21 @@
             copyText.setSelectionRange(0, 99999); /* For mobile devices */
             document.execCommand('copy');
             alert('URL copied to clipboard');
+        }
+
+        function fetchRandomIP() {
+            fetch('https://raw.githubusercontent.com/ircfspace/endpoint/refs/heads/main/ip.json')
+                .then(response => response.json())
+                .then(data => {
+                    var ipv4List = data.ipv4;
+                    var randomIndex = Math.floor(Math.random() * ipv4List.length);
+                    var randomIP = ipv4List[randomIndex];
+                    var [ip, port] = randomIP.split(':');
+
+                    document.getElementById('ip').value = ip;
+                    document.getElementById('port').value = port;
+                })
+                .catch(error => console.error('Error fetching data:', error));
         }
     </script>
 </body>
