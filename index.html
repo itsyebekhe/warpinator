@@ -165,12 +165,20 @@
             document.getElementById('warpinatorForm').addEventListener('submit', function(event) {
                 event.preventDefault();
 
-                let license = document.getElementById('license').value || '';
-                let type = document.getElementById('type').value || 'singbox';
-                let ip = document.getElementById('ip').value || '162.159.192.76';
-                let port = document.getElementById('port').value || '2408';
+                let params = {
+                    license: document.getElementById('license').value || '',
+                    type: document.getElementById('type').value || 'singbox',
+                    ip: document.getElementById('ip').value || '162.159.192.76',
+                    port: document.getElementById('port').value || '2408'
+                };
 
-                let url = `https://itshin.serv00.net/api/warpinator?license=${encodeURIComponent(license)}&type=${encodeURIComponent(type)}&ip=${encodeURIComponent(ip)}&port=${encodeURIComponent(port)}`;
+                // Remove empty or null query parameters
+                const queryString = Object.keys(params)
+                    .filter(key => params[key] !== '')
+                    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+                    .join('&');
+
+                let url = `https://itshin.serv00.net/api/warpinator?${queryString}`;
 
                 document.getElementById('generatedUrl').value = url;
                 document.getElementById('result').style.display = 'block';
