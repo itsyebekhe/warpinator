@@ -181,11 +181,13 @@
         });
 
         function copyToClipboard() {
-            let copyText = document.getElementById('generatedUrl');
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); /* For mobile devices */
-            document.execCommand('copy');
-            alert('URL copied to clipboard');
+            let copyText = document.getElementById('generatedUrl').value;
+
+            navigator.clipboard.writeText(copyText).then(() => {
+                M.toast({html: 'URL copied to clipboard'});
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
         }
 
         function fetchRandomIP() {
