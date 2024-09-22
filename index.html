@@ -165,12 +165,20 @@
             document.getElementById('warpinatorForm').addEventListener('submit', function(event) {
                 event.preventDefault();
 
-                var license = document.getElementById('license').value || '';
-                var type = document.getElementById('type').value || 'singbox';
-                var ip = document.getElementById('ip').value || '162.159.192.76';
-                var port = document.getElementById('port').value || '2408';
+                let params = {
+                    license: document.getElementById('license').value || '',
+                    type: document.getElementById('type').value || 'singbox',
+                    ip: document.getElementById('ip').value || '162.159.192.76',
+                    port: document.getElementById('port').value || '2408'
+                };
 
-                var url = `https://itshin.serv00.net/api/warpinator?license=${encodeURIComponent(license)}&type=${encodeURIComponent(type)}&ip=${encodeURIComponent(ip)}&port=${encodeURIComponent(port)}`;
+                // Remove empty or null query parameters
+                const queryString = Object.keys(params)
+                    .filter(key => params[key] !== '')
+                    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+                    .join('&');
+
+                let url = `https://itshin.serv00.net/api/warpinator?${queryString}`;
 
                 document.getElementById('generatedUrl').value = url;
                 document.getElementById('result').style.display = 'block';
@@ -181,21 +189,23 @@
         });
 
         function copyToClipboard() {
-            var copyText = document.getElementById('generatedUrl');
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); /* For mobile devices */
-            document.execCommand('copy');
-            alert('URL copied to clipboard');
+            let copyText = document.getElementById('generatedUrl').value;
+
+            navigator.clipboard.writeText(copyText).then(() => {
+                M.toast({html: 'URL copied to clipboard'});
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
         }
 
         function fetchRandomIP() {
             fetch('https://raw.githubusercontent.com/ircfspace/endpoint/refs/heads/main/ip.json')
                 .then(response => response.json())
                 .then(data => {
-                    var ipv4List = data.ipv4;
-                    var randomIndex = Math.floor(Math.random() * ipv4List.length);
-                    var randomIP = ipv4List[randomIndex];
-                    var [ip, port] = randomIP.split(':');
+                    let ipv4List = data.ipv4;
+                    let randomIndex = Math.floor(Math.random() * ipv4List.length);
+                    let randomIP = ipv4List[randomIndex];
+                    let [ip, port] = randomIP.split(':');
 
                     document.getElementById('ip').value = ip;
                     document.getElementById('port').value = port;
@@ -204,7 +214,7 @@
         }
 
         function generateQRCode(data) {
-            var qrCodeContainer = document.getElementById('qrCodeContainer');
+            let qrCodeContainer = document.getElementById('qrCodeContainer');
             qrCodeContainer.innerHTML = ''; // Clear previous QR code if any
 
             new QRCode(qrCodeContainer, {
