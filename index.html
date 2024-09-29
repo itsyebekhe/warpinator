@@ -167,9 +167,15 @@
 
                 var license = document.getElementById('license').value || '';
                 var type = document.getElementById('type').value || 'singbox';
+                var ip = document.getElementById('ip').value || '162.159.192.76';
+                var port = document.getElementById('port').value || '2408';
                 var auto = document.getElementById('autoFillCheckbox').checked ? 'true' : 'false';
 
                 var url = `https://itshin.serv00.net/api/warpinator?license=${encodeURIComponent(license)}&type=${encodeURIComponent(type)}&auto=${encodeURIComponent(auto)}`;
+
+                if (!document.getElementById('autoFillCheckbox').checked) {
+                    url += `&ip=${encodeURIComponent(ip)}&port=${encodeURIComponent(port)}`;
+                }
 
                 document.getElementById('generatedUrl').value = url;
                 document.getElementById('result').style.display = 'block';
